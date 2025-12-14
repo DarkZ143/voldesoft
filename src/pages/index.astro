@@ -1,0 +1,23 @@
+---
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Navbar from "../components/Navbar.astro";
+import SoftwareGallery from "../components/SoftwareGallery.astro";
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Voldesoft - Software Hub for All solutions</title>
+  </head>
+  <body>
+    <Navbar />
+    <Hero />
+    <SoftwareGallery />
+    <Footer />
+  </body>
+</html>

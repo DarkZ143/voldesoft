@@ -1,0 +1,94 @@
+---
+const softwares = [
+  {
+    name: "DocMagic",
+    image: "/softwares/docmagic.png",
+    desc: "Offline high-performance document processing software",
+  },
+  {
+    name: "Hostello",
+    image: "/softwares/hostello.png",
+    desc: "Smart hostel & accommodation management system",
+  },
+  {
+    name: "Kloud OS",
+    image: "/softwares/kloudos.png",
+    desc: "Browser-based cloud operating system",
+  },
+  {
+    name: "Smart Wardrobe",
+    image: "/softwares/smartwardrobe.png",
+    desc: "AI-driven outfit & color intelligence platform",
+  },
+  {
+    name: "Disaster Manager",
+    image: "/softwares/disaster.png",
+    desc: "Emergency response & disaster coordination system",
+  },
+];
+---
+
+<section class="relative bg-black py-28 overflow-hidden">
+
+  <!-- Section Header -->
+  <div class="max-w-7xl mx-auto px-6 mb-16">
+    <h2 class="text-3xl md:text-4xl font-extrabold text-white">
+      Software We’ve Already Built
+    </h2>
+    <p class="mt-4 max-w-3xl text-slate-400">
+      A collection of research-driven softwares and platforms engineered
+      by Voldesoft — production-ready, performance-focused, and real-world tested.
+    </p>
+  </div>
+
+  <!-- Horizontal Scroll Wrapper -->
+  <div
+    class="relative flex gap-8 overflow-x-auto px-6 pb-8
+    scrollbar-hide scroll-smooth"
+  >
+
+    {softwares.map((app) => (
+      <div
+        class="min-w-75 md:min-w-95 group rounded-2xl
+        bg-linear-to-b from-slate-900 to-slate-950
+        border border-slate-800 overflow-hidden
+        hover:border-sky-500 transition"
+      >
+
+        <!-- Image -->
+        <div class="relative h-52 overflow-hidden">
+          <img
+            src={app.image}
+            alt={app.name}
+            class="h-full w-full object-cover
+            group-hover:scale-110 transition duration-500"
+          />
+
+          <!-- Overlay -->
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0
+            group-hover:opacity-100 transition"
+          ></div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white">
+            {app.name}
+          </h3>
+          <p class="mt-2 text-sm text-slate-400">
+            {app.desc}
+          </p>
+        </div>
+
+      </div>
+    ))}
+
+  </div>
+
+  <!-- Scroll Hint -->
+  <div class="mt-8 text-center text-slate-500 text-sm">
+    ← Scroll horizontally to explore →
+  </div>
+
+</section>

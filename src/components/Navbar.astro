@@ -1,0 +1,223 @@
+---
+import Image from "astro/components/Image.astro";
+
+const downloads = [
+  "Windows App",
+  "Android App",
+  "CLI Tools",
+  "API SDK",
+  "Documentation",
+];
+---
+
+<nav class="sticky top-0 z-50 bg-blue-950 border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Top Bar -->
+    <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="text-xl font-bold text-sky-400">
+        <Image src="/logo.png" alt="Voldesoft Logo" width={200} height={140} />
+      </a>
+
+      <!-- Center Typing Animation -->
+      <div class="hidden md:flex font-mono text-green-400 text-sm">
+        &lt;
+        <span id="typingText"></span>
+        <span class="ml-0.5 animate-pulse">_</span>
+        &gt;
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center gap-4">
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex items-center gap-6 text-sm text-gray-200">
+          <li><a href="/" class="hover:text-sky-400">Home</a></li>
+
+          <!-- Dropdown -->
+          <li class="relative">
+            <button
+              id="desktopDropBtn"
+              class="flex items-center gap-1 hover:text-sky-400"
+            >
+              Downloads ▾
+            </button>
+
+            <ul
+              id="desktopDropdown"
+              class="absolute left-0 mt-3 w-48 overflow-hidden rounded-xl
+              bg-blue-900 border border-slate-800
+              opacity-0 scale-95 pointer-events-none
+              transition-all duration-300 ease-out"
+            >
+              {
+                downloads.map((item) => (
+                  <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 hover:bg-slate-800 hover:text-sky-400"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+
+          <li><a href="/about" class="hover:text-sky-400">About Us</a></li>
+
+          <li>
+            <a
+              href="/contact"
+              class="rounded-lg bg-sky-400 px-4 py-2 font-semibold
+              text-slate-950 hover:bg-sky-300 transition"
+            >
+              Contact Us
+            </a>
+          </li>
+        </ul>
+
+        <!-- Mobile Toggle -->
+        <button id="menuToggle" class="md:hidden text-2xl text-gray-200">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      id="mobileMenu"
+      class="max-h-0 overflow-hidden opacity-0
+  transition-all duration-300 ease-in-out
+  md:hidden"
+    >
+      <div class="flex flex-col py-4 text-gray-200 space-y-4">
+        <a href="/" class="hover:text-sky-400">Home</a>
+
+        <!-- Downloads wrapper -->
+        <div>
+          <button
+            id="mobileDropBtn"
+            class="flex w-full items-center justify-between hover:text-sky-400"
+          >
+            <span>Downloads</span>
+            <span>▾</span>
+          </button>
+
+          <!-- Dropdown content (NO extra margin pushing others) -->
+          <div
+            id="mobileDropdown"
+            class="ml-4 mt-2 max-h-0 overflow-hidden opacity-0
+        transition-all duration-300 ease-in-out text-sm space-y-2"
+          >
+            <a href="#" class="block hover:text-sky-400">Windows App</a>
+            <a href="#" class="block hover:text-sky-400">Android App</a>
+            <a href="#" class="block hover:text-sky-400">CLI Tools</a>
+            <a href="#" class="block hover:text-sky-400">API SDK</a>
+            <a href="#" class="block hover:text-sky-400">Documentation</a>
+          </div>
+        </div>
+
+        <!-- These will now stay aligned properly -->
+        <a href="/about" class="hover:text-sky-400">About Us</a>
+
+        <a
+          href="/contact"
+          class="w-fit rounded-lg bg-sky-400 px-4 py-2
+      font-semibold text-slate-950"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smooth Interaction JS -->
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("max-h-0");
+        mobileMenu.classList.toggle("max-h-[500px]");
+        mobileMenu.classList.toggle("opacity-0");
+        mobileMenu.classList.toggle("opacity-100");
+      });
+    }
+
+    // Mobile dropdown
+    const mobileDropBtn = document.getElementById("mobileDropBtn");
+    const mobileDropdown = document.getElementById("mobileDropdown");
+
+    if (mobileDropBtn && mobileDropdown) {
+      mobileDropBtn.addEventListener("click", () => {
+        mobileDropdown.classList.toggle("max-h-0");
+        mobileDropdown.classList.toggle("max-h-[300px]");
+        mobileDropdown.classList.toggle("opacity-0");
+        mobileDropdown.classList.toggle("opacity-100");
+      });
+    }
+
+    // Desktop dropdown
+    const desktopDropBtn = document.getElementById("desktopDropBtn");
+    const desktopDropdown = document.getElementById("desktopDropdown");
+
+    if (desktopDropBtn && desktopDropdown) {
+      desktopDropBtn.addEventListener("click", () => {
+        desktopDropdown.classList.toggle("opacity-0");
+        desktopDropdown.classList.toggle("scale-95");
+        desktopDropdown.classList.toggle("pointer-events-none");
+
+        desktopDropdown.classList.toggle("opacity-100");
+        desktopDropdown.classList.toggle("scale-100");
+        desktopDropdown.classList.toggle("pointer-events-auto");
+      });
+    }
+
+    const texts = [
+      "Solution by Us",
+      "Ease Tech Life",
+      "Speed Up Daily Works",
+      "Innovating Digital Future",
+    ];
+
+    const typingEl = document.getElementById("typingText");
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    const typingSpeed = 80;
+    const deletingSpeed = 40;
+    const pauseAfterType = 1200;
+    const pauseAfterDelete = 400;
+
+    function typeLoop() {
+      const currentText = texts[textIndex];
+
+      if (typingEl) {
+        if (!isDeleting) {
+          // Typing
+          typingEl.textContent = currentText.slice(0, charIndex++);
+          if (charIndex > currentText.length) {
+            setTimeout(() => (isDeleting = true), pauseAfterType);
+          }
+        } else {
+          // Deleting
+          typingEl.textContent = currentText.slice(0, charIndex--);
+          if (charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+            setTimeout(() => {}, pauseAfterDelete);
+          }
+        }
+      }
+
+      setTimeout(typeLoop, isDeleting ? deletingSpeed : typingSpeed);
+    }
+
+    typeLoop();
+  </script>
+</nav>
